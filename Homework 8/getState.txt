@@ -1,0 +1,79 @@
+    def succ(self, state):
+        """ Takes in a board state and finds all legal successors in the form (row, col)
+        Helper method
+
+        Return: a list of the legal successors
+        """
+        #TODO: add source_row and source_col to the list of appending 
+        succ_state = []
+        if drop_phase:
+            for row in range(5):
+                for col in range(5):
+                    if state[row][col] != ' ':
+                        succ_state.append((row, col))
+        else:
+            for row in range(5):
+                for col in range(5):
+                     if state[row][col] != ' ':
+                            if row-1 < 0 and col-1 < 0:
+                                succ_state.append([(row+1, col), (row, col)])
+                                succ_state.append([(row, col+1), (row, col)])
+                                succ_state.append([(row+1, col+1), (row, col)])
+                            elif col-1 < 0:
+                                succ_state.append([(row+1, col), (row, col)])
+                                succ_state.append([(row, col+1), (row, col)])
+                                succ_state.append([(row+1, col+1), (row, col)])
+                                succ_state.append([(row-1, col), (row, col)])
+                                succ_state.append([(row-1, col+1), (row, col)])
+                            elif row+1 > 4 and col-1 < 0:
+                                succ_state.append([(row-1, col), (row, col)])
+                                succ_state.append([(row, col+1), (row, col)])
+                                succ_state.append([(row-1, col+1), (row, col)])
+                            elif row+1 > 4:
+                                succ_state.append([(row, col+1), (row, col)])
+                                succ_state.append([(row, col-1), (row, col)])
+                                succ_state.append([(row-1, col), (row, col)])
+                                succ_state.append([(row-1, col+1), (row, col)])
+                                succ_state.append([(row-1, col-1), (row, col)])
+                            elif row+1 > 4 and col+1 > 4:
+                                succ_state.append([(row-1, col-1), (row, col)])
+                                succ_state.append([(row-1, col), (row, col)])
+                                succ_state.append([(row, col-1), (row, col)])
+                            elif col+1 > 4:
+                                succ_state.append([(row, col-1), (row, col)])
+                                succ_state.append([(row-1, col), (row, col)])
+                                succ_state.append([(row+1, col), (row, col)])
+                                succ_state.append([(row-1, col-1), (row, col)])
+                                succ_state.append([(row+1, col-1), (row, col)])
+                            elif row-1 < 0 and col+1 > 4:
+                                succ_state.append([(row+1, col), (row, col)])
+                                succ_state.append([(row, col-1), (row, col)])
+                                succ_state.append([(row+1, col-1), (row, col)])
+                            elif row-1 < 0:
+                                succ_state.append([(row, col+1), (row, col)])
+                                succ_state.append([(row, col-1), (row, col)])
+                                succ_state.append([(row+1, col+1), (row, col)])
+                                succ_state.append([(row+1, col-1), (row, col)])
+                                succ_state.append([(row+1, col), (row, col)])
+                            else:
+                                succ_state.append([(row+1, col), (row, col)])
+                                succ_state.append([(row-1, col), (row, col)])
+                                succ_state.append([(row, col+1), (row, col)])
+                                succ_state.append([(row, col-1), (row, col)])
+                                succ_state.append([(row+1, col+1), (row, col)])
+                                succ_state.append([(row-1, col+1), (row, col)])
+                                succ_state.append([(row+1, col-1), (row, col)])
+                                succ_state.append([(row-1, col-1), (row, col)])
+        
+        #Gets the full board of successor 
+        boards = []
+        for move in enumerate(succ_state):
+            board = copy.deepcopy(state)
+            if drop_phase:
+                board[move[0], move[1]] = self.my_piece
+                boards.append(board)
+            else:
+                board[move[1][0], move[1][1]] == ' '
+                board[move[0][0], move[0][1]] = self.my_piece
+                boards.append(board)
+        return boards
