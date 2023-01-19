@@ -1,0 +1,1 @@
+print(create_vocabulary('./EasyFiles/', 1))
